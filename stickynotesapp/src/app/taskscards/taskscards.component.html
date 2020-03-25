@@ -1,0 +1,10 @@
+<div *ngFor="let obj of taskitems | async"  style="padding: 10px;">
+<div class="card text-white bg-success mb-3" style="max-width: 18rem;">
+  <div class="card-header">{{obj.title}}</div>
+  <div class="card-body">
+    <h5 class="card-title">{{obj.description}}</h5>
+    <p class="card-title">{{obj.duedate.toDate() | date:'dd/MM/yyyy'}}</p>
+    <button mat-button>DELETE</button>
+  </div>
+</div>
+</div>

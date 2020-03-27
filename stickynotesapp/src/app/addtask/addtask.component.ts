@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { TaskserviceService } from '../taskservice.service';
+import { tasks } from '../tasks.model';
+
 @Component({
   selector: 'app-addtask',
   templateUrl: './addtask.component.html',
@@ -12,13 +15,14 @@ importance="";
   addOnBlur = true;
   myForm: FormGroup;
 
-  constructor(public fb: FormBuilder) {}
+  constructor(public fb: FormBuilder,private serviceobj:TaskserviceService) {}
 
   ngOnInit(): void {
     this.reactiveForm();
   }
   reactiveForm() {
     this.myForm = this.fb.group({
+      title:['',[Validators.required]],
       description: ['', [Validators.required]],
       importance: [''],
       duedate: ['', [Validators.required]]
@@ -37,7 +41,9 @@ public errorHandling = (control: string, error: string) => {
   return this.myForm.controls[control].hasError(error);
 }
   submitForm() {
-    console.log(this.myForm.value)
+    console.log(this.myForm.value);
+    this.serviceobj.addTask(this.myForm.value);
+    console.log("tasks added");
   }
 
 }

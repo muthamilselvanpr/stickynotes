@@ -11,8 +11,15 @@ export class GuardService  implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
 
   canActivate( next: ActivatedRouteSnapshot,state: RouterStateSnapshot):boolean {
-    console.log('AuthGuard#canActivate called');
+    if(this.authService.isLoggedIn){
+      console.log(this.authService.isLoggedIn);
     return true;
+    }
+    // else{
+    //   console.log("Access Denied");
+    //   this.router.navigate(['/login']);
+    //   return false;
+    // }
   }
   
   checkLogin(url: string): boolean {

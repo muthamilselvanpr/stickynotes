@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, NO_ERRORS_SCHEMA} from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {ReactiveFormsModule } from '@angular/forms';
+import { Observable, Subject, ReplaySubject, from, of, range } from 'rxjs'; 
+import { map, filter, switchMap } from 'rxjs/operators';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AngularFireModule } from '@angular/fire';
@@ -27,7 +29,8 @@ import { ContactusComponent } from './contactus/contactus.component';
 import { LoginauthComponent } from './loginauth/loginauth.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { AngularFireAuthModule } from '@angular/fire/auth';
-
+import { AuthService } from './auth.service';
+import { GuardService } from './guard.service';
 
 @NgModule({
   declarations: [
@@ -40,6 +43,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AngularFireAuthModule,
     AppRoutingModule,
     ReactiveFormsModule,
@@ -59,9 +63,9 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
     MatDatepickerModule,
     MatTableModule,
     MatTabsModule
-    ],
-  schemas:[NO_ERRORS_SCHEMA],
-  providers: [TaskserviceService,{provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher}],
+      ],
+  schemas:[NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA],
+  providers: [TaskserviceService,AuthService,GuardService,{provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

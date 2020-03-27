@@ -39,10 +39,13 @@ ngOnInit(): void {
   this.getTasks();
   }
 
-  deleteTask(task) {
+  deleteItem(task) {
     //Get the task id
+    console.log(task);
     let taskId = task.id;
-    //delete the task
-    this.serviceobj.deleteTask(taskId);
+    console.log("deleted");
+    //delete the task 
+    this.serviceobj.deleteTask(task);
+    console.log("deleted");
  } //deleteTask
 }

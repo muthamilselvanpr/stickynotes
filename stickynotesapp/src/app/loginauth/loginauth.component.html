@@ -1,2 +1,11 @@
-<button class="btn btn-success" (click)="authService.GoogleAuth()">Login with Google</button>
-<button class="btn btn-danger" (click)="authService.Logout()">Logout</button>
+ <div>
+<div *ngIf="this.authService.isLoggedIn;else login">
+    <button class="btn btn-danger" (click)="authService.Logout()">Logout</button>
+</div>
+</div>
+
+<ng-template #login>
+    <button class="btn btn-success" (click)="authService.GoogleAuth()">Login with Google</button>   
+    <!-- <button class="btn btn-danger" (click)="authService.Logout()">Logout</button> -->
+</ng-template>
+ 

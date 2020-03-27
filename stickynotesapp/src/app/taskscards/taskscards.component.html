@@ -4,7 +4,7 @@
   <div class="card-body">
     <h5 class="card-title">{{obj.description}}</h5>
     <p class="card-title">{{obj.duedate.toDate() | date:'dd/MM/yyyy'}}</p>
-    <button mat-button>DELETE</button>
+    <button mat-button (click)="deleteItem(obj)">DELETE</button>
   </div>
 </div>
 </div>

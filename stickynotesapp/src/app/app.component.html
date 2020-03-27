@@ -5,7 +5,7 @@
         <a class="navbar-brand" 
            *ngFor="let routeLink of navLinks; let i = index;"
            [routerLink]="routeLink.link"
-           routerLinkActive="mat-tab-link-active"
+           routerLinkActive="active"
            #rla="routerLinkActive"
            (click)="activeLinkIndex = i"
            [routerLinkActiveOptions]="{exact: true}"

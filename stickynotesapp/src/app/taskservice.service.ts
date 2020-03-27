@@ -3,7 +3,6 @@ import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection 
 import { tasks } from './tasks.model';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
-import { ThrowStmt } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root'
@@ -13,32 +12,32 @@ export class TaskserviceService {
  taskstodo:AngularFirestoreCollection<tasks>;
  tasks:Observable<tasks[]>;
  taskDoc: AngularFirestoreDocument<tasks>;
- tasksnapshot:any;
+ taskarray:tasks[];
  
   constructor(private readonly af:AngularFirestore  ) {
     this.taskstodo= this.af.collection<tasks>('taskstodo');
     this.tasks=this.taskstodo.valueChanges();
-    this.tasksnapshot=this.taskstodo.snapshotChanges().pipe(map(actions => {
+    this.tasks=this.taskstodo.snapshotChanges().pipe(map(actions => {
       return actions.map(a => {
         const data = a.payload.doc.data() as tasks;
-        const id = a.payload.doc.id;
-        return { id,...data };
+        data.id = a.payload.doc.id;
+        return data;
       });
     }));
-    
     //this.taskstodo=af.collection<tasks>('tasks');
     //this.tasks = this.taskstodo.valueChanges();
    }
 
    getTasks(){
-    return this.af.collection('taskstodo').valueChanges();
+    return this.tasks;
   }
 
 
    addTask(taskitem:tasks) {
     //Add the new task to the collection
     //this.taskstodo.add(taskitem);
-    return this.af.collection('taskstodo').add(taskitem);
+    taskitem.duedate=new Date(taskitem.duedate);
+    this.taskstodo.add(taskitem);
   }
 
   updatetask(taskitem:tasks){
@@ -46,9 +45,9 @@ export class TaskserviceService {
     return this.af.doc('taskstodo/'+taskitem.id).update(taskitem);
   }
 
-  deleteTask(taskitem:string) {
+  deleteTask(taskitem:tasks) {
     //Get the task id
-    this.af.doc('taskstodo/'+taskitem).delete();
+    this.af.doc('taskstodo/'+taskitem.id).delete();
     //Delete the document
    } 
  
